@@ -53,6 +53,6 @@ class AutoPost(AutoPostBase):
 
 
 if __name__ == '__main__':
-
+    print "Start Re Posting"
     ap = AutoPost()
     ap.post()
