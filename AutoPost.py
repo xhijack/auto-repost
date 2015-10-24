@@ -29,17 +29,17 @@ class AutoPostBase(object):
         urllib.urlretrieve(source, filename)
 
     def check_file(self, filename):
-        return os.path.isfile(IMAGES_PATH + filename)
+        return os.path.isfile(filename)
 
     def post(self):
         for source in self.whitelist:
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
             image_url = medias.images['standard_resolution'].url
             filename = medias.id + '.jpg'
-            if self.check_file(filename) is False:
-                self.download(image_url, filename)
-
-                media_id = self.insta_post.upload_photo(filename)
+            target_url = IMAGES_PATH + filename
+            if self.check_file(target_url) is False:
+                self.download(image_url, target_url)
+                media_id = self.insta_post.upload_photo(target_url)
                 if media_id is not None:
                     self.insta_post.configure_photo(media_id, medias.caption.text)
                 else:
