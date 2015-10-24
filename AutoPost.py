@@ -36,7 +36,7 @@ class AutoPostBase(object):
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
             image_url = medias.images['standard_resolution'].url
             filename = medias.id + '.jpg'
-            if self.check_file(filename):
+            if self.check_file(filename) is False:
                 self.download(image_url, filename)
 
                 media_id = self.insta_post.upload_photo(filename)
