@@ -5,5 +5,5 @@ cd /home/ramdani/projects/auto-repost
 
 while true; do
     python AutoPost.py
-    sleep 3600
+    sleep 300
 done

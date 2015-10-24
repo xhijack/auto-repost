@@ -41,7 +41,7 @@ class AutoPostBase(object):
                 self.download(image_url, target_url)
                 media_id = self.insta_post.upload_photo(target_url)
                 if media_id is not None:
-                    self.insta_post.configure_photo(media_id, medias.caption.text)
+                        self.insta_post.configure_photo(media_id, medias.caption.text + ' sumber @' + medias.user.username + ' #wikislam')
                 else:
                     print "Failed"
 
