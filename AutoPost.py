@@ -29,7 +29,7 @@ class AutoPostBase(object):
         urllib.urlretrieve(source, filename)
 
     def check_file(self, filename):
-        return os.path.isfile(filename)
+        return os.path.isfile(IMAGES_PATH + filename)
 
     def post(self):
         for source in self.whitelist:

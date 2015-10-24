@@ -11,3 +11,10 @@ ACCESS_TOKEN = '1552719530.6c7aa75.de55f341beff4eaca7d97de4b260bb79'
 
 USERNAME_INSTAGRAM = 'wiksilam'
 PASSWORD = 'master88'
+
+IMAGES_PATH = '/home/ramdani/projects/projects/python/postop/images/'
+
+try:
+    from local_config import *
+except:
+    pass
