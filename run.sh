@@ -3,4 +3,7 @@
 #workon autorepost
 cd /home/ramdani/projects/auto-repost
 
-python AutoPost.py
+while true; do
+    python AutoPost.py
+    sleep 3600
+done
