@@ -5,5 +5,6 @@ cd /home/ramdani/projects/auto-repost
 
 while true; do
     python AutoPost.py
+    python instascraper.py
     sleep 300
 done
