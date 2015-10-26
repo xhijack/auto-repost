@@ -12,7 +12,7 @@ from instagram.client import InstagramAPI
 
 from config import *
 from choice import *
-from igpost import InstagramSession
+from insta_gram import InstagramSession
 
 
 class AutoPostBase(object):
@@ -39,16 +39,14 @@ class AutoPostBase(object):
             target_url = IMAGES_PATH + filename
             if self.check_file(target_url) is False:
                 self.download(image_url, target_url)
-                media_id = self.insta_post.upload_photo(target_url)
-                if media_id is not None:
-                        self.insta_post.configure_photo(media_id, medias.caption.text + ' sumber @' + medias.user.username + ' #wikislam')
-                else:
-                    print "Failed"
-
+                caption = medias.caption.text + ' sumber @' + medias.user.username + ' wikislam'
+                result = self.insta_post.upload_photo(target_url, caption)
+                print result
+                
 class AutoPost(AutoPostBase):
 
     instagram = InstagramAPI(access_token=ACCESS_TOKEN, client_secret=CLIENT_SECRET)
-    insta_post = InstagramSession('wikislam','master88')
+    insta_post = InstagramSession('wikislam','m@ster88')
     whitelist = WHITELIST
 
 

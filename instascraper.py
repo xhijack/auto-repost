@@ -33,6 +33,10 @@ class ItemIg(dict):
         return "Title : {0}".format(self.title)
 
 class IG(object):
+    """
+        This class for handling Instagram API
+    """
+
     def __init__(self, access_token=None, client_id=None, client_secret=None, key_tag=None, seperator=None):
         self.access_token = access_token
         self.client_id = client_id
@@ -45,6 +49,9 @@ class IG(object):
         return self.api_recent_media()[0]
 
     def parser(self, media):
+        """
+            parsing from IG to ItemIg
+        """
         media_string = media.caption.text.split(self.seperator)
         title = media_string[0].strip()
         price = media_string[1].strip()
@@ -85,6 +92,9 @@ class WooPost(IG):
     wo = WooCommerce(url, consumer_key, consumer_secret)
 
     def post(self, item):
+        """
+            This is for posting to woocommerce
+        """
         product = Product(item.title, regular_price=item.price, description=item.description,
                       short_description=item.short_description, categories=item.categories, images=item.images, tags=item.tags)
 
