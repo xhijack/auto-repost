@@ -31,6 +31,26 @@ class AutoPostBase(object):
     def check_file(self, filename):
         return os.path.isfile(filename)
 
+    def get_media_from_liked(self):
+        """
+            Get list of images where user like some post
+        """
+        images = []
+        medias = self.instagram.user_liked_media()[0]
+        for media in medias:
+            image_url = media.images['standard_resolution'].url
+            filename = media.id + '.jpg'
+            target_url = IMAGES_PATH + filename
+            if self.check_file(target_url) is False:
+                self.download(image_url, target_url)
+
+                if media.caption == None:
+                    caption = ''
+                caption = caption + ' sumber @' + media.user.username + ' wikislam'
+                result = self.insta_post.upload_photo(target_url, caption)
+                print result
+
+
     def post(self):
         for source in self.whitelist:
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
@@ -45,7 +65,7 @@ class AutoPostBase(object):
                 
 class AutoPost(AutoPostBase):
 
-    instagram = InstagramAPI(access_token=ACCESS_TOKEN, client_secret=CLIENT_SECRET)
+    instagram = InstagramAPI(access_token=ACCESS_TOKEN_WIKI, client_secret=CLIENT_SECRET)
     insta_post = InstagramSession('wikislam','m@ster88')
     whitelist = WHITELIST
 
@@ -54,3 +74,4 @@ if __name__ == '__main__':
     print "Start Re Posting"
     ap = AutoPost()
     ap.post()
+    ap.get_media_from_liked()
