@@ -44,6 +44,7 @@ class AutoPostBase(object):
             if self.check_file(target_url) is False:
                 self.download(image_url, target_url)
 
+                caption = ''
                 if media.caption == None:
                     caption = ''
                 caption = caption + ' sumber @' + media.user.username + ' wikislam'
