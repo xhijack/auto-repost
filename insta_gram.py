@@ -25,6 +25,9 @@ class InstagramSession(object):
         self.password = password
         self.debug = debug
 
+        if self.login(self.username, self.password) == False:
+            raise ValueError('Invalid username & password')
+
     def login(self, username, password):
 
         data = json.dumps({
@@ -46,28 +49,27 @@ class InstagramSession(object):
         r_json = r.json()
 
         if r_json.get('status') != "ok":
+            print r_json
             return False
+
 
         return True
 
     def upload_photo(self, filename, caption):
-        if self.login(self.username, self.password):
-            data = {
-                "device_timestamp": time.time(),
-            }
-            files = {
-                "photo": open(filename, 'rb'),
-            }
+        data = {
+            "device_timestamp": time.time(),
+        }
+        files = {
+            "photo": open(filename, 'rb'),
+        }
 
-            r = self.session.post("https://instagram.com/api/v1/media/upload/", data, files=files)
- 
-            if r.status_code == 200:
-                r_json = r.json()
-                media_id=r_json.get('media_id')
-                if media_id:
-                    return self.configure_photo(media_id, caption)
-        else:
-            raise ValueError('Invalid username & password')
+        r = self.session.post("https://instagram.com/api/v1/media/upload/", data, files=files)
+
+        if r.status_code == 200:
+            r_json = r.json()
+            media_id=r_json.get('media_id')
+            if media_id:
+                return self.configure_photo(media_id, caption)
 
     def configure_photo(self, media_id, caption):
         data = json.dumps({
@@ -98,7 +100,6 @@ class InstagramSession(object):
         if self.debug:
             import pdb
             pdb.set_trace()
-
 
         if r_json.get('status') != "ok":
             return False

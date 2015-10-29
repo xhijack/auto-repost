@@ -1,3 +1,4 @@
+import random
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
@@ -7,6 +8,7 @@ __date__ ="$Oct 24, 2015 6:50:56 PM$"
 
 import os.path
 import urllib
+import time
 
 from instagram.client import InstagramAPI
 
@@ -38,33 +40,33 @@ class AutoPostBase(object):
         images = []
         medias = self.instagram.user_liked_media()[0]
         for media in medias:
-            image_url = media.images['standard_resolution'].url
-            filename = image_url.split('/')[-1:][0] # media.id + '.jpg'
-            target_url = IMAGES_PATH + filename
-	    print target_url
-            if self.check_file(target_url) is False:
-                self.download(image_url, target_url)
+            self.post()
 
-                caption = ''
-                if media.caption == None:
-                    caption = ''
-                caption = caption + ' sumber @' + media.user.username + ' wikislam'
-                result = self.insta_post.upload_photo(target_url, caption)
-                print result
-
-
-    def post(self):
+    def get_media_from_choice(self):
         for source in self.whitelist:
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
-            image_url = medias.images['standard_resolution'].url
-            filename = image_url.split('/')[-1:][0]  #medias.id + '.jpg'
-            target_url = IMAGES_PATH + filename
-	    print target_url
-            if self.check_file(target_url) is False:
-                self.download(image_url, target_url)
-                caption = medias.caption.text + ' sumber @' + medias.user.username + ' wikislam'
-                result = self.insta_post.upload_photo(target_url, caption)
-                print result
+            self.post(medias)
+
+    def post(self, media):
+        image_url = media.images['standard_resolution'].url
+        filename = image_url.split('/')[-1:][0] # media.id + '.jpg'
+        target_url = IMAGES_PATH + filename
+        if self.check_file(target_url) is False:
+            print '-->Prepare Upload/Download', target_url
+            time.sleep(random.randint(100,300))
+            print "---> Downloading"
+            self.download(image_url, target_url)
+
+            caption = ''
+            if media.caption == None:
+                caption = ''
+            caption = caption + ' sumber @' + media.user.username + ' wikislam'
+            print "--> Uploading"
+            result = self.insta_post.upload_photo(target_url, caption)
+            print result
+        else:
+            print "File is exists"
+
                 
 class AutoPost(AutoPostBase):
 
@@ -76,5 +78,5 @@ class AutoPost(AutoPostBase):
 if __name__ == '__main__':
     print "Start Re Posting"
     ap = AutoPost()
-    ap.post()
+    ap.get_media_from_choice()
     ap.get_media_from_liked()
