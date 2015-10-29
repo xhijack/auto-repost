@@ -39,8 +39,9 @@ class AutoPostBase(object):
         medias = self.instagram.user_liked_media()[0]
         for media in medias:
             image_url = media.images['standard_resolution'].url
-            filename = media.id + '.jpg'
+            filename = image_url.split('/')[-1:][0] # media.id + '.jpg'
             target_url = IMAGES_PATH + filename
+	    print target_url
             if self.check_file(target_url) is False:
                 self.download(image_url, target_url)
 
@@ -56,8 +57,9 @@ class AutoPostBase(object):
         for source in self.whitelist:
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
             image_url = medias.images['standard_resolution'].url
-            filename = medias.id + '.jpg'
+            filename = image_url.split('/')[-1:][0]  #medias.id + '.jpg'
             target_url = IMAGES_PATH + filename
+	    print target_url
             if self.check_file(target_url) is False:
                 self.download(image_url, target_url)
                 caption = medias.caption.text + ' sumber @' + medias.user.username + ' wikislam'
