@@ -47,6 +47,9 @@ class AutoPostBase(object):
             medias = self.instagram.user_recent_media(user_id = source)[0][0]
             self.post(medias)
 
+    def get_user_id(self, username):
+        return self.instagram.user_search(username)[0].id
+
     def post(self, media):
         image_url = media.images['standard_resolution'].url
         filename = image_url.split('/')[-1:][0] # media.id + '.jpg'

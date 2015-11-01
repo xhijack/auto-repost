@@ -22,7 +22,7 @@ class AutoPost(AutoPostBase):
 
     def pull_all(self):
         for user in WHITELIST:
-            medias=self.instagram.user_recent_media(user)
+            medias=self.instagram.user_recent_media(self.get_user_id(user))
             if medias:
                 medias = medias[0]
                 for media in medias:
