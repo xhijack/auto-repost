@@ -15,7 +15,7 @@ ACCESS_TOKEN = '1552719530.6c7aa75.de55f341beff4eaca7d97de4b260bb79'
 #client_id = '6c7aa750ffee4871b9d57e94daafa03e'
 api = InstagramAPI(access_token=ACCESS_TOKEN, client_secret=CLIENT_SECRET)
 
-# https://instagram.com/oauth/authorize/?client_id=6c7aa750ffee4871b9d57e94daafa03e&redirect_uri=http://sopwer.net&response_type=token
+# https://instagram.com/oauth/authorize/?client_id=6c7aa750ffee4871b9d57e94daafa03e&redirect_uri=http://addavii.com&response_type=token
 
 class ItemIg(dict):
 
