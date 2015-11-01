@@ -68,10 +68,12 @@ class InstagramSession(object):
         if r.status_code == 200:
             r_json = r.json()
             media_id=r_json.get('media_id')
+	    print r_json
             if media_id:
                 return self.configure_photo(media_id, caption)
 
     def configure_photo(self, media_id, caption):
+	print 'MEDIA ID : ', media_id
         data = json.dumps({
             "device_id": self.device_id,
             "guid": self.guid,
@@ -101,10 +103,10 @@ class InstagramSession(object):
             import pdb
             pdb.set_trace()
 
-        if r_json.get('status') != "ok":
-            return False
+        #if r_json.get('status') != "ok":
+        #    return False
 
-        return True
+        return r_json
 
     def _generate_signature(self, data):
         return hmac.new('b4a23f5e39b5929e0666ac5de94c89d1618a2916'.encode('utf-8'), data.encode('utf-8'), hashlib.sha256).hexdigest()

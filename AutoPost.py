@@ -7,6 +7,7 @@ __email__="ramdani@sopwer.net"
 __date__ ="$Oct 24, 2015 6:50:56 PM$"
 
 import os.path
+import os
 import urllib
 import time
 
@@ -40,7 +41,7 @@ class AutoPostBase(object):
         images = []
         medias = self.instagram.user_liked_media()[0]
         for media in medias:
-            self.post()
+            self.post(media)
 
     def get_media_from_choice(self):
         for source in self.whitelist:
@@ -52,17 +53,27 @@ class AutoPostBase(object):
         filename = image_url.split('/')[-1:][0] # media.id + '.jpg'
         target_url = IMAGES_PATH + filename
         if self.check_file(target_url) is False:
-            print '-->Prepare Upload/Download', target_url
-            time.sleep(random.randint(100,300))
+            WAITING_TIME = random.randint(10,180)
+	    print "Waiting Time", WAITING_TIME
+	    time.sleep(WAITING_TIME)
+	   
+	    print '-->Prepare Upload/Download', image_url
             print "---> Downloading"
             self.download(image_url, target_url)
 
             caption = ''
             if media.caption == None:
                 caption = ''
-            caption = caption + ' sumber @' + media.user.username + ' wikislam'
+	    else:
+		caption = media.caption.text
+	    
+	    
+            caption = caption + ' repost @' + media.user.username + ' #wikislam'
             print "--> Uploading"
             result = self.insta_post.upload_photo(target_url, caption)
+	    error = result.get('error_title',None)
+	    if error == 'media_not_found':
+		os.remove(target_url)
             print result
         else:
             print "File is exists"
@@ -71,12 +82,14 @@ class AutoPostBase(object):
 class AutoPost(AutoPostBase):
 
     instagram = InstagramAPI(access_token=ACCESS_TOKEN_WIKI, client_secret=CLIENT_SECRET)
-    insta_post = InstagramSession('wikislam','m@ster88')
+    insta_post = InstagramSession('wikislam','wikislam88')
     whitelist = WHITELIST
 
 
 if __name__ == '__main__':
     print "Start Re Posting"
     ap = AutoPost()
+    print "+++ MEDIA +++"
     ap.get_media_from_choice()
+    print "+++ LIKED +++"
     ap.get_media_from_liked()
