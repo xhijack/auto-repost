@@ -3,7 +3,6 @@ import urllib
 import time
 import random
 import logging
-from logging import handlers
 from config import *
 from abc import ABCMeta
 
@@ -36,6 +35,7 @@ class Instapy(object):
     end_of_caption = ' repost from @'
     remove_caption = False
     remove_tags = False
+    IMAGES_PATH = None
 
     def __init__(self, waiting_time=None):
         self.waiting_time = waiting_time or random.randint(10, 300)
@@ -100,7 +100,7 @@ class Instapy(object):
     def post(self, media):
         image_url = media.get_standard_resolution_url()
         filename = image_url.split('/')[-1:][0] # media.id + '.jpg'
-        target_url = IMAGES_PATH + filename
+        target_url = self.IMAGES_PATH + filename
 
         if self.check_file(target_url) is False:
             if self.waiting_time:

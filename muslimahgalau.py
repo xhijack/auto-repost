@@ -15,7 +15,7 @@ PASSWORD = 'master'
 
 USERS = ['RUMAHDAKWAH', 'BERTAHAJUDLAH', 'KANGABAY_', 'INDONESIAMENUTUPAURAT', 'FELIXSIAUW',
          'NIKAHBAROKAH', 'MUDA_BERDAKWAH', 'MENIKAHBAHAGIA', 'JODOH.SEJATI', 'DAKWAHJOMBLO', 'CINTAMULIA',
-         'SUAMI.ISTERI.BAHAGIA', 'SAHABATMUSLIMAH', 'USAHAIMANAMAL', 'MUSLIMAH_TALK', 'muslimahcorner',
+         'SAHABATMUSLIMAH', 'USAHAIMANAMAL', 'MUSLIMAH_TALK', 'muslimahcorner',
          'ISTRIKUBIDADARIKU', 'SAHABAT.MUSLIMAH', 'INSPIRING.MUSLIMAH', 'MUSLIMAHORID', 'SALIMAFILLAH']
 
 
@@ -25,9 +25,10 @@ class MuslimahGalau(Instapy):
     insta_post = InstagramSession(username=USERNAME, password=PASSWORD)
     user_followed = USERS
     tags = ['#muslimahgalau', '#muslimah', '#galau', '#akhowat']
+    IMAGES_PATH = '/home/ramdani/projects/auto-repost/muslimah_images/'
 
 if __name__ == '__main__':
     print "Start Reposting"
-    mg = MuslimahGalau(waiting_time=random.randint(10, 20))
+    mg = MuslimahGalau(waiting_time=random.randint(100, 300))
     mg.post_media_from_choice()
     print "Finished"
