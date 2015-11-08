@@ -8,7 +8,7 @@ __email__="ramdani@sopwer.net"
 __date__ ="$Nov 1, 2015 13:50:18 PM$"
 
 
-ACCESS_TOKEN = '2269073896.6c7aa75.ea7a610b25d748b9b8190465ef2ffda7'
+ACCESS_TOKEN = '2269390601.6c7aa75.adf9d994d2284a9dbc86ef019df0451e'
 CLIENT_SECRET = 'b8f0d7112d3b40bd9927cfd28bf2a422'
 USERNAME = 'muslimahkepo'
 PASSWORD = 'master'
@@ -31,7 +31,7 @@ class MuslimahGalau(Instapy):
 
 if __name__ == '__main__':
     print "Start Reposting"
-    mg = MuslimahGalau(waiting_time=random.randint(100, 1000))
+    mg = MuslimahGalau(waiting_time=random.randint(100, 300))
     mg.post_media_from_choice()
     mg.post_media_from_liked()
     print "Finished"
